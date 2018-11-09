@@ -38,7 +38,7 @@ class AppController extends Controller {
      *
      * @var type 
      */
-    private $key = '4ec0b8a0f028a05954a7e519704aec22';
+    private $key = 'U7ABNSyefTt2yCFQdrPrR7CVSQuXur';
     
     /**
      * Initialization hook method.
@@ -111,11 +111,14 @@ class AppController extends Controller {
             ->send();
     }
 
-    protected function fetchRate() {
+    protected function convert($from,$to,$amount) {
         $http = new Client();
-        $response = $http->get('http://data.fixer.io/api/latest?access_key='.$this->key);
-        
-        return $response;
+        $response = $http->get('https://www.amdoren.com/api/currency.php?api_key='.$this->key.'&from='.$from.'&to='.$to.'&amount='.$amount);
+        if($response->isOk()){
+           $result = json_decode($response->body(), true);
+           return $result['amount'];
+        }
+        return false;
     }
 
 }
