@@ -22,7 +22,7 @@ class CurrenciesSeed extends AbstractSeed {
             
             [
                 'name' => 'South African Rands',
-                'rate' => 0,
+                'rate' => 16.1496,
                 'code' => 'ZAR',
                 'surcharge' => 0,
                 'created' => date('Y-m-d H:i:s'),
