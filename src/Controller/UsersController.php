@@ -117,18 +117,20 @@ class UsersController extends AppController {
     }
 
     public function updaterates() {
-        $currs = $this->Currencies->find('all');
-        $arr = json_decode($this->fetchRate()->body(),true);
-        
-        foreach ($arr['rates'] as $key=>$curr) {
-            //$curr->rate = $this->fetchRate();
-            //$this->Currencies->save($curr);
-            if($key == 'USD'){
-                echo $curr;
+        $codeArray = ['USD', 'GBP', 'EUR', 'KES', 'ZAR'];
+        if ($this->fetchRate()->isOk()) {
+            $curr = json_decode($this->fetchRate()->body(), true);
+            foreach ($curr['rates'] as $key => $rate) {
+                if (in_array($key, $codeArray)) {
+                    $data = $this->Currencies->find()->where(['code' => $key])->first();
+                    $data->rate = $rate;
+                    $this->Currencies->save($data);
+                }
             }
+            $this->Flash->success(__('Currency rate has been updated successfully.'));
+            return $this->redirect(['action' => 'index']);
         }
-        exit();
-        $this->Flash->success(__('Currency rate has been updated successfully.'));
+        $this->Flash->error(__('An error occured, please try again.'));
         return $this->redirect(['action' => 'index']);
     }
 
@@ -144,15 +146,16 @@ class UsersController extends AppController {
 
     public function getRates($fromCurrency, $toCurrency, $amount) {
         if ($this->request->is('ajax')) {
-            $currs = $this->Currencies->find()->where(['code' => $fromCurrency])->select(['surcharge', 'code', 'rate', 'name'])->first();
+            $currs = $this->Currencies->find()->where(['code' => $toCurrency])->select(['surcharge', 'code', 'rate', 'name'])->first();
             if ($currs->has('rate')) {
-
-                $value = (double) $amount / $currs->rate;
+                $value = (double) $amount * $currs->rate;
                 $surCharge = ($currs->surcharge / 100) * $value;
                 $rate = $currs->rate;
                 $amountTopay = $value + $surCharge;
-                $this->set(['surPerc' => $currs->surcharge, 'currency' => $fromCurrency, 'surCharge' => $surCharge,
-                    'amountTopay' => $amountTopay, 'ZarAmountForeign' => $value, 'rate' => $rate, 'surCharge' => $surCharge, 'Foreignamount' => $amount]);
+                $this->set(['surPerc' => $currs->surcharge, 'currency' => $fromCurrency,
+                    'surCharge' => $surCharge, 'amountTopay' => $amountTopay,
+                    'ZarAmountForeign' => $value, 'rate' => $rate, 'surCharge' => $surCharge,
+                    'Foreignamount' => $amount]);
             } else {
                 $this->render('unmatched');
             }

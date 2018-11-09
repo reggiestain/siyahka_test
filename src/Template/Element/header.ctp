@@ -26,7 +26,7 @@
             <a class="navbar-brand" href="#">Dashboard</a>
         </div>
         <div class="navbar-collapse collapse">
-            <a class="btn btn-primary navbar-btn" href="<?php echo \Cake\Routing\Router::Url('/users/updaterates');?>">Update Rates</a>
+            <a class="btn btn-primary navbar-btn" href="<?php echo \Cake\Routing\Router::Url('/users/updaterates');?>">Click to update rates</a>
             <ul class="nav navbar-nav navbar-right">
                 <li><a  href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $userEmail;?></a></li>
                 <li><a href="<?php echo \Cake\Routing\Router::Url('/users/logout');?>"><i class="glyphicon glyphicon-lock"></i> Logout</a></li>
