@@ -41,7 +41,7 @@ use Cake\Network\Exception\NotFoundException;
                            ?>
                             </div>
                             <div class="form-group col-md-4">            
-                                <input type="text" name="foreign_exchange_amount" class="form-control" placeholder="Enter amount" id="f-value">
+                                <input type="text" name="foreign_exchange_amount" id="amount" class="form-control" placeholder="Enter amount" id="f-value">
                             </div>
                             <div class="form-group col-md-2">
                                 <button type="button" class="btn btn-success btn-lg convert">Convert</button>   
@@ -89,8 +89,9 @@ use Cake\Network\Exception\NotFoundException;
             event.preventDefault();
             var tocurrency = 'ZAR';
             var fromcurrency = $('#currency').val();
+            var amount = $('#amount').val();
             var randvalue = parseFloat($('#f-value').val()).toFixed(2);
-            if (!fromcurrency == '' && !tocurrency == '') {
+            if (!fromcurrency == '' && !tocurrency == '' && !amount=='' ) {
                 $('input[name=from_currency]').val(fromcurrency);
                 $('input[name=foreign_exchange_amount]').val(randvalue);
                 $('#myModal').modal();
@@ -111,7 +112,7 @@ use Cake\Network\Exception\NotFoundException;
                     }
                 });
             } else {
-                alert('Please select currency');
+                alert('Please select currency and enter an amount');
             }
         });
 
