@@ -89,14 +89,13 @@ use Cake\Network\Exception\NotFoundException;
             event.preventDefault();
             var tocurrency = 'ZAR';
             var fromcurrency = $('#currency').val();
-            var amount = $('#amount').val();
-            var randvalue = parseFloat($('#f-value').val()).toFixed(2);
+            var amount = parseFloat($('#amount').val()).toFixed(2);
             if (!fromcurrency == '' && !tocurrency == '' && !amount=='' ) {
                 $('input[name=from_currency]').val(fromcurrency);
-                $('input[name=foreign_exchange_amount]').val(randvalue);
+                $('input[name=foreign_exchange_amount]').val(amount);
                 $('#myModal').modal();
                 $.ajax({
-                    url: "<?php echo \Cake\Routing\Router::Url('/users/get_rates/');?>" + fromcurrency + "/" + tocurrency + "/" + randvalue,
+                    url: "<?php echo \Cake\Routing\Router::Url('/users/get_rates/');?>" + fromcurrency + "/" + tocurrency + "/" + amount,
                     type: "POST",
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('X-CSRF-Token', $('[name="_csrfToken"]').val());
