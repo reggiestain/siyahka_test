@@ -21,14 +21,6 @@ class CurrenciesSeed extends AbstractSeed {
         $data = [
             
             [
-                'name' => 'South African Rands',
-                'rate' => 16.1496,
-                'code' => 'ZAR',
-                'surcharge' => 0,
-                'created' => date('Y-m-d H:i:s'),
-            ],
-            
-            [
                 'name' => 'US Dollars',
                 'rate' => 0.0808279,
                 'code' => 'USD',

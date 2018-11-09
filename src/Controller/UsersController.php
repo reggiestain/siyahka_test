@@ -118,7 +118,8 @@ class UsersController extends AppController {
 
     public function updaterates() {
         $codeArray = ['USD', 'GBP', 'EUR', 'KES'];
-        if ($this->fetchRate('USD','ZAR')->isOk()) {
+        if ($this->fetchRate()->isOk()) {
+            
             $curr = json_decode($this->fetchRate()->body(), true);
             foreach ($curr['rates'] as $key => $rate) {
                 if (in_array($key, $codeArray)) {
